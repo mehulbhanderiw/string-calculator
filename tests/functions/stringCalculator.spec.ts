@@ -70,4 +70,16 @@ describe("add function", () => {
   it("should throw an error for input with invalid custom delimiter characters", () => {
     expect(() => add("//;\n1; a ;3")).toThrow("Invalid number:  a ");
   });
+
+  // Test case for negative number input
+  test("should throw an exception for negative numbers", () => {
+    expect(() => add("1,-1")).toThrow("Negative numbers not allowed: -1");
+  });
+
+  // Test case for multiple negative numbers input
+  test("should throw an exception for multiple negative numbers", () => {
+    expect(() => add("1,-1,-2")).toThrow(
+      "Negative numbers not allowed: -1, -2"
+    );
+  });
 });
