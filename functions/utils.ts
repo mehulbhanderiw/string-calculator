@@ -1,11 +1,17 @@
 /**
- * Parses numbers from a comma-separated string.
- * @param numbers - A string containing numbers separated by commas.
+ * Parses numbers from a string separated by commas or new lines.
+ * @param numbers - A string containing numbers separated by commas or new lines.
  * @returns An array of numbers parsed from the input string.
  * @throws Error if any substring cannot be converted to a valid number.
  */
 export function parseNumbers(numbers: string): number[] {
-  return numbers.split(",").map((num) => {
+  // Replace \\n with \n to handle escaped newlines
+  numbers = numbers.replace(/\\n/g, "\n");
+
+  // Use regular expression to split by comma or new line
+  const numberStrings = numbers.split(/[\n,]+/);
+
+  return numberStrings.map((num) => {
     // Trim whitespace from each substring and convert to a number
     const parsedNumber = Number(num.trim());
 

@@ -1,8 +1,8 @@
 import { parseNumbers, sumNumbers } from "./utils";
 
 /**
- * Sums up numbers provided in a comma-separated string.
- * @param numbers - A string containing numbers separated by commas.
+ * Sums up numbers provided in a string separated by commas or new lines.
+ * @param numbers - A string containing numbers separated by commas or new lines.
  * @returns The sum of the numbers. Returns 0 if the input string is empty.
  */
 export function add(numbers: string): number {
@@ -11,7 +11,7 @@ export function add(numbers: string): number {
     return 0;
   }
 
-  // Split the string by commas and convert each substring to a number
+  // Split the string by commas or new lines and convert each substring to a number
   const numberArray = parseNumbers(numbers);
 
   // Sum the numbers in the array
