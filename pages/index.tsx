@@ -1,3 +1,4 @@
+import { add } from "@/functions";
 import { useState } from "react";
 
 const Home = () => {
@@ -11,6 +12,16 @@ const Home = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    try {
+      const sum = add(input);
+      setResult(sum);
+      setError(null);
+    } catch (e) {
+      if (e instanceof Error) {
+        setError(e.message);
+      }
+      setResult(null);
+    }
   };
 
   return (
