@@ -45,4 +45,29 @@ describe("add function", () => {
   it("should handle numbers with spaces between new lines and commas", () => {
     expect(add("1\n 2 , 3\n4")).toBe(10);
   });
+
+  // Test case for custom delimiter
+  it("should handle custom delimiter specified at the beginning of the string", () => {
+    expect(add("//;\n1;2")).toBe(3);
+  });
+
+  // Test case for custom delimiter with multiple numbers
+  it("should handle custom delimiter with multiple numbers", () => {
+    expect(add("//|\n1|2|3")).toBe(6);
+  });
+
+  // Test case for custom delimiter with newline
+  it("should handle custom delimiter with newline in numbers", () => {
+    expect(add("//;\n1;2\n3")).toBe(6);
+  });
+
+  // Test case for custom delimiter with spaces
+  it("should handle custom delimiter with spaces around numbers", () => {
+    expect(add("//;\n1 ; 2 ; 3")).toBe(6);
+  });
+
+  // Test case for invalid custom delimiter input
+  it("should throw an error for input with invalid custom delimiter characters", () => {
+    expect(() => add("//;\n1; a ;3")).toThrow("Invalid number:  a ");
+  });
 });

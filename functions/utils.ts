@@ -1,15 +1,38 @@
 /**
- * Parses numbers from a string separated by commas or new lines.
- * @param numbers - A string containing numbers separated by commas or new lines.
+ * Extracts the custom delimiter and cleans the input string.
+ * @param numbers - A string that may contain a custom delimiter format.
+ * @returns An object containing the delimiter and the cleaned numbers string.
+ */
+export function extractDelimiterAndClean(numbers: string): {
+  delimiter: string;
+  cleanedNumbers: string;
+} {
+  let delimiter = ",";
+  let cleanedNumbers = numbers;
+
+  // Check if the input string starts with "//"
+  if (numbers.startsWith("//")) {
+    // Find the position of the new line character after "//"
+    const delimiterEndIndex = numbers.indexOf("\n");
+
+    // Extract the delimiter substring between "//" and the new line character
+    delimiter = numbers.substring(2, delimiterEndIndex);
+    cleanedNumbers = numbers.substring(delimiterEndIndex + 1);
+  }
+
+  return { delimiter, cleanedNumbers };
+}
+
+/**
+ * Parses numbers from a string separated by a given delimiter.
+ * @param numbers - A string containing numbers separated by the delimiter.
+ * @param delimiter - The delimiter used to separate numbers.
  * @returns An array of numbers parsed from the input string.
  * @throws Error if any substring cannot be converted to a valid number.
  */
-export function parseNumbers(numbers: string): number[] {
-  // Replace \\n with \n to handle escaped newlines
-  numbers = numbers.replace(/\\n/g, "\n");
-
-  // Use regular expression to split by comma or new line
-  const numberStrings = numbers.split(/[\n,]+/);
+export function parseNumbers(numbers: string, delimiter: string): number[] {
+  // Split the input string by the provided delimiter
+  const numberStrings = numbers.split(new RegExp(`[${delimiter}\n]`));
 
   return numberStrings.map((num) => {
     // Trim whitespace from each substring and convert to a number
