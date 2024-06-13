@@ -1,10 +1,41 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
+import { useState } from "react";
 
-const inter = Inter({ subsets: ["latin"] });
+const Home = () => {
+  const [input, setInput] = useState<string>("");
+  const [result, setResult] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-export default function Home() {
-  return <></>;
-}
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setInput(event.target.value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
+
+  return (
+    <div>
+      <h1>String Calculator</h1>
+      <form style={{ display: "flex" }} onSubmit={handleSubmit}>
+        <textarea
+          value={input}
+          onChange={handleInputChange}
+          placeholder="Enter numbers"
+        />
+        <button type="submit">Add</button>
+      </form>
+      {result !== null && (
+        <div>
+          <h2>Result: {result}</h2>
+        </div>
+      )}
+      {error && (
+        <div>
+          <h2 style={{ color: "red" }}>Error: {error}</h2>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Home;
